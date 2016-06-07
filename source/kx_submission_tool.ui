@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SubmissionMainWindow</class>
+ <widget class="QMainWindow" name="SubmissionMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>629</width>
+    <height>268</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>TenQing素材上传工具</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="kx_submission_tool.qrc">
+    <normaloff>:/windowIcon/upload.png</normaloff>:/windowIcon/upload.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="viewVerticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="brosweHorizontalLayout">
+        <item>
+         <widget class="QLabel" name="pathLabel">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>素材路径：</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="pathLineEdit"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="broswePushButton">
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	border:none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="kx_submission_tool.qrc">
+            <normaloff>:/browseIcon/folder_invoices.png</normaloff>:/browseIcon/folder_invoices.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTableView" name="tableView">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="removeButton">
+        <property name="toolTip">
+         <string>移除一项</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+	border:none;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="kx_submission_tool.qrc">
+          <normaloff>:/removeIcon/remove.png</normaloff>:/removeIcon/remove.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="resetPushButton">
+        <property name="toolTip">
+         <string>重置页面</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+	border:none;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="kx_submission_tool.qrc">
+          <normaloff>:/resetIcon/refresh.png</normaloff>:/resetIcon/refresh.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="logoLabel">
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>120</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>公司Logo</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="kx_submission_tool.qrc">:/logo/TenQingLogo.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="submitPushButton">
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>6000</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>开始上传</string>
+        </property>
+        <property name="text">
+         <string>上传</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="kx_submission_tool.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -1,0 +1,23 @@
+<RCC>
+  <qresource prefix="windowIcon">
+    <file>upload.png</file>
+  </qresource>
+  <qresource prefix="removeIcon">
+    <file>remove.png</file>
+  </qresource>
+  <qresource prefix="rightIcon">
+    <file>check_mark.png</file>
+  </qresource>
+  <qresource prefix="errorIcon">
+    <file>delete.png</file>
+  </qresource>
+  <qresource prefix="resetIcon">
+    <file>refresh.png</file>
+  </qresource>
+  <qresource prefix="browseIcon">
+    <file>folder_invoices.png</file>
+  </qresource>
+  <qresource prefix="logo">
+    <file>TenQingLogo.png</file>
+  </qresource>
+</RCC>
