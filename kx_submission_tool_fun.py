@@ -12,10 +12,17 @@ Created on 2016年6月6日 下午3:23:01
 
 '''
 
-import os, os.path
+import os, os.path, shutil
 from PyQt4 import QtCore
 from kx_submission_tool_sequenceFileDetection import SequenceFileDetection
 from kx_submission_tool_projectMatch import ProjNameMatch
+
+
+optionDic = {
+             'Left':'stereoCameraLeft',
+             'Right':'stereoCameraRight',
+             'Normal':None
+             }
 
 def parseCmd(path, mod = 1):
     result = []
@@ -53,13 +60,42 @@ def parseCmd(path, mod = 1):
     return result
 
 
-def copyCmd(data):
-    fileName = os.path.basename(data[1])
+def copyCmd(filePath, add, frame = None):
+    textName = os.path.basename(filePath)
+    textPath = os.path.dirname(filePath)
     pnm = ProjNameMatch()
-    pnm.setFileName(fileName)
+    pnm.setFileName(textName)
     pnm.setPrefix(mod=1)
+    version = pnm.getResults('version_number')
     uploadPath = pnm.getUploadServerPath(mod='Images')
-    print uploadPath
+    if optionDic[u"%s" %add] :
+        uploadPath = os.path.join(uploadPath, optionDic[u"%s" %add], version)
+    else :
+        uploadPath = os.path.join(uploadPath, version)
+    
+    uploadPath = uploadPath.replace("//kaixuan.com/kx/Proj/SENBA/Production/Render", "E:") 
+    if os.path.exists(uploadPath):
+        pass
+    else :
+        try:
+            os.makedirs(uploadPath)
+        except:
+            raise OSError, "check property"
+       
+    if frame :
+        fileName = "{0}.{1}.{2}".format(textName.split(".")[0], frame, textName.split(".")[-1])
+    else :
+        fileName = "{0}".format(textName)
+    
+    sourceFile = os.path.join(textPath, fileName)
+    uploadFile = os.path.join(uploadPath, fileName)
+    
+    try:
+        shutil.copy2(sourceFile, uploadFile)
+    except:
+        raise IOError, "failure"
+    #print uploadFile
+    return uploadFile
     
 def getFrames(frameRange):
     sections = frameRange.split(",")
@@ -85,5 +121,6 @@ if __name__ == "__main__":
     '''
     #print parseCmd('E:\\rock_sq\\sq001\\sc001\\stereoCameraLeft\\c001', mod = 1)
     #print getFrames("1001-1010,1012-1014")
-    print getFrames("1001")
+    #print getFrames("1001")
     #print getFrames("1001-1010,1012-1014,1016,1020-1022")
+    print copyCmd("E:\\senba_sq\\sq001\\sc001\\c001\\SB_102_001_001_cp_c001.1%3d.tga", "Normal")

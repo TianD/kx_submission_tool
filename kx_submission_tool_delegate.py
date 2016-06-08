@@ -42,7 +42,6 @@ class ProgressBarDelegate(QtGui.QStyledItemDelegate):
         opt.rect = option.rect
         opt.textVisible = False
         opt.text = str(value)
-        
         # draw item data as CheckBox
         style.drawControl(QtGui.QStyle.CE_ProgressBar, opt, painter)
 # #     

@@ -92,14 +92,14 @@ class SubmissionWindow(QtGui.QMainWindow, Ui_SubmissionMainWindow):
         '''
         model = self.tableView.model()
         row = model.rowCount()
-        column = model.columnCount()
+        column = model.columnCount() 
         indexLst = [model.index(i,4) for i in range(row)]
-        threads = [SubmitWorker(model.getData()[i]) for i in range(row)]
+        threads = [SubmitWorker() for i in range(row)]
         for i in range(row):
             index = indexLst[i]
             subThread = threads[i]
             subThread.progressSignal.connect(partial(model.setData, index))
-            subThread.start()
+            subThread.start(model.getData()[i])
                       
     def droppedCmd(self, str):
         self.loadThread = LoadWorker()
