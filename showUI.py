@@ -22,7 +22,6 @@ from kx_submission_tool_delegate import ProgressBarDelegate, ComboBoxDelegate
 from kx_submission_tool_model import TableModel
 from kx_submission_tool_thread import SubmitWorker, LoadWorker
 
-
 class SubmissionWindow(QtGui.QMainWindow, Ui_SubmissionMainWindow):
     
     def __init__(self, parent = None):
@@ -77,14 +76,14 @@ class SubmissionWindow(QtGui.QMainWindow, Ui_SubmissionMainWindow):
         tabledata = []
         self.contentModel = TableModel(headerLabels, tabledata)
         self.tableView.setModel(self.contentModel)
-        pbd = ProgressBarDelegate(self.tableView) 
+        pbd = ProgressBarDelegate(self.tableView)
         self.tableView.setItemDelegateForColumn(4, pbd)
         cbd = ComboBoxDelegate(options, self.tableView)
         self.tableView.setItemDelegateForColumn(3, cbd)
     
     def setTableData(self, data):
         rowCount = self.contentModel.rowCount()
-        self.contentModel.insertRows(rowCount, data) 
+        self.contentModel.insertRows(rowCount, data)
                 
     def submitCmd(self):
         '''
@@ -96,6 +95,7 @@ class SubmissionWindow(QtGui.QMainWindow, Ui_SubmissionMainWindow):
         indexLst = [model.index(i,4) for i in range(row)]
         threads = [SubmitWorker() for i in range(row)]
         for i in range(row):
+            
             index = indexLst[i]
             subThread = threads[i]
             subThread.progressSignal.connect(partial(model.setData, index))

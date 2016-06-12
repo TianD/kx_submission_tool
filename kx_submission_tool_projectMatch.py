@@ -268,7 +268,7 @@ class ProjNameMatch(object):
             if matching:
                 break
         if not matching:
-            print u'文件名称命名不规范!'
+            print u'{0}文件名称命名不规范!'.format(fileName)
         return matching
 
     def getPorjName(self):

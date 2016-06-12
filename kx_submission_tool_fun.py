@@ -37,7 +37,7 @@ def parseCmd(path, mod = 1):
         elif 'stereoCameraRight' in root or 'CamR' in root:
             option = QtCore.QVariant("Right")
         else :
-            pass
+            option = QtCore.QVariant("Normal")
         for key, value in dic.iteritems():
             if key == "separateFiles":
                 pnm = ProjNameMatch()
@@ -59,10 +59,8 @@ def parseCmd(path, mod = 1):
             
     return result
 
-
-def copyCmd(filePath, add, frame = None):
+def createPath(filePath, add):
     textName = os.path.basename(filePath)
-    textPath = os.path.dirname(filePath)
     pnm = ProjNameMatch()
     pnm.setFileName(textName)
     pnm.setPrefix(mod=1)
@@ -75,12 +73,19 @@ def copyCmd(filePath, add, frame = None):
     
     uploadPath = uploadPath.replace("//kaixuan.com/kx/Proj/SENBA/Production/Render", "E:") 
     if os.path.exists(uploadPath):
+        #print "{0} has existed".format(uploadPath)
         pass
     else :
         try:
             os.makedirs(uploadPath)
         except:
             raise OSError, "check property"
+        
+    return uploadPath
+
+def copyCmd(filePath, uploadPath, frame = None):
+    textName = os.path.basename(filePath)
+    textPath = os.path.dirname(filePath)
        
     if frame :
         fileName = "{0}.{1}.{2}".format(textName.split(".")[0], frame, textName.split(".")[-1])

@@ -12,6 +12,32 @@ Created on 2016年5月30日 下午3:37:57
 
 '''
 
+XPROGRESS_DEFAULT_STYLE = """
+QProgressBar{
+    border: 2px solid grey;
+    border-radius: 5px;
+    text-align: center
+}
+QProgressBar::chunk {
+    background-color: lightblue;
+    width: 2px;
+    margin: 1px;
+}
+"""
+
+XPROGRESS_COMPLETED_STYLE = """
+QProgressBar{
+    border: 2px solid grey;
+    border-radius: 5px;
+    text-align: center
+}
+QProgressBar::chunk {
+    background-color: #CD96CD;
+    width: 2px;
+    margin: 1px;
+}
+"""
+
 from PyQt4 import QtCore, QtGui
 from _functools import partial
 
@@ -21,30 +47,31 @@ class ProgressBarDelegate(QtGui.QStyledItemDelegate):
         super(ProgressBarDelegate, self).__init__(parent)
         self.parent = parent
     
-    def createEditor(self, parent, option, index):
-        editor = QtGui.QProgressBar(parent)
-        return editor
-    
-    def setEditorData(self, editor, index):
-        value = index.data(QtCore.Qt.DisplayRole).toInt()
-        editor.setValue(value[0])
+#     def createEditor(self, parent, option, index):
+#         editor = QtGui.QProgressBar(parent)
+#         return editor
+#     
+#     def setEditorData(self, editor, index):
+#         value = index.data(QtCore.Qt.DisplayRole).toInt()
+#         editor.setValue(value[0])
     
     def paint(self, painter, option, index):
-
+   
         value = index.data(QtCore.Qt.DisplayRole)
         value,_ = value.toInt()
-        
+           
         # fill style options with item data
         style = QtGui.QApplication.style()
         opt = QtGui.QStyleOptionProgressBarV2()
         opt.maximum = 100
         opt.progress = value
         opt.rect = option.rect
-        opt.textVisible = False
+        opt.textVisible = True
         opt.text = str(value)
+        opt.textAlignment = QtCore.Qt.AlignHCenter
         # draw item data as CheckBox
         style.drawControl(QtGui.QStyle.CE_ProgressBar, opt, painter)
-# #     
+#     
             
 
 class ComboBoxDelegate(QtGui.QStyledItemDelegate):

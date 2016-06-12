@@ -27,7 +27,7 @@ class LoadWorker(QtCore.QThread):
     def __del__(self):
         self.working = False
         self.quit()
-        print "%s finished" %self.thread()
+        #print "%s finished" %self.thread()
             
     def start(self, path):
         super(LoadWorker, self).start()
@@ -36,7 +36,7 @@ class LoadWorker(QtCore.QThread):
             self.path = [path]
         else :
             self.path = path
-        print "%s start" %self.thread()
+        #print "%s start" %self.thread()
     
     def run(self):
         while self.working :
@@ -52,22 +52,26 @@ class SubmitWorker(QtCore.QThread):
         super(SubmitWorker, self).__init__()
         self.working = True
         self.mutex = QtCore.QMutex()
-        
-         
+                
     def __del__(self):
         self.working = False
+        self.wait()
+        self.quit()
         print "%s finished" %self.thread()
         
     def start(self, data):
         super(SubmitWorker, self).start()
-        self.working = True
         self.counts = 1
         self.count = 0
+        #self.percent = self.count*100/self.counts
         self.data = data
         if self.data[2]:
             self.framesLst = fun.getFrames(self.data[2])
             self.counts = len(self.framesLst)
+        self.uploadPath = fun.createPath(self.data[1], self.data[3].toString())
+        print "create %s" % self.uploadPath
         print "%s start" %self.thread()
+        self.working = True
         
     def run(self):
         self.mutex.lock()
@@ -77,21 +81,23 @@ class SubmitWorker(QtCore.QThread):
         while self.working:
             if self.counts > 1:
                 try:
-                    fun.copyCmd(self.data[1], self.data[3].toString(), self.framesLst[self.count])
+                    fun.copyCmd(self.data[1], self.uploadPath, self.framesLst[self.count])
                 except:
-                    self.working = False
+                    #self.working = False
+                    continue
             else :
                 try:
-                    fun.copyCmd(self.data[1], self.data[3].toString())
+                    fun.copyCmd(self.data[1], self.uploadPath)
                 except:
-                    self.working = False
-            #print "%s run at %s" %(self.thread(), time.time())
+                    #self.working = False
+                    continue
+            #self.percent = self.count*100/self.counts
             self.progressSignal.emit(self.count*100/self.counts)
             time.sleep(1)
             self.count += 1
             if self.count >= self.counts:
                 self.working = False
+                #self.percent = 100
                 self.progressSignal.emit(100)
-     
         self.mutex.unlock()
         
