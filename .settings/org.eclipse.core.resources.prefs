@@ -6,4 +6,6 @@ encoding/kx_submission_tool_model.py=utf-8
 encoding/kx_submission_tool_sequenceFileDetection.py=utf-8
 encoding/kx_submission_tool_thread.py=utf-8
 encoding/kx_submission_tool_widget.py=utf-8
+encoding/pyinstaller.py=utf-8
 encoding/showUI.py=utf-8
+encoding/temp3.py=utf-8

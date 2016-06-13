@@ -1,0 +1,9 @@
+('E:\\Scripts\\Eclipse\\kx_submission_tool\\build\\KX_submission_tool\\KX_submission_tool.exe',
+ False,
+ False,
+ 'E:\\Scripts\\Eclipse\\kx_submission_tool\\kx_submission_tool.ico',
+ None,
+ [],
+ None,
+ False,
+ 1465801535L)

@@ -44,12 +44,23 @@ class TableModel(QtCore.QAbstractTableModel):
         if not self.rowCount():
             return 
         
+        row = index.row()
+        column = index.column()
         if role == QtCore.Qt.DisplayRole or role == QtCore.Qt.EditRole:
-            row = index.row()
-            column = index.column()
-            value = self.__data[row][column]
-            return value
-    
+            if column != 0:
+                value = self.__data[row][column]
+                return value
+        
+        if role == QtCore.Qt.DecorationRole :
+            if column == 0:
+                value = self.__data[row][column]
+                if value == 2:
+                    return QtGui.QColor(0,255,0)
+                elif value == 1:
+                    return QtGui.QColor(255,0,0)
+                else :
+                    return 
+            
     def flags(self, index):
         column = index.column()
         if column == 3 :
@@ -58,21 +69,21 @@ class TableModel(QtCore.QAbstractTableModel):
     
     def setData(self, index, value, role = QtCore.Qt.DisplayRole):
                 
-        if role == QtCore.Qt.EditRole or role == QtCore.Qt.DisplayRole :
+        if role == QtCore.Qt.EditRole or role == QtCore.Qt.DisplayRole or role == QtCore.Qt.DecorationRole:
             row = index.row()
             column = index.column()
             
             value = value
-            if column == 4:
+            if column == 4 or column == 0 :
                 self.__data[row][column] = value
                 self.dataChanged.emit(index, index)
-                return True
+                return True               
             else :
                 if value.isValid():
                     self.__data[row][column] = value
                     self.dataChanged.emit(index, index)
                 return True
-            
+        
         return False   
     
     def insertRows(self, row, data, parent = QtCore.QModelIndex()):

@@ -100,7 +100,18 @@ class SubmissionWindow(QtGui.QMainWindow, Ui_SubmissionMainWindow):
             subThread = threads[i]
             subThread.progressSignal.connect(partial(model.setData, index))
             subThread.start(model.getData()[i])
-                      
+            subThread.finishSignal.connect(partial(self.setFlagCmd, index))
+    
+    def setFlagCmd(self, index, int):
+        model = index.model()
+        row = index.row()
+        column = 0
+        flagIndex = model.index(row, 0)
+        if int == 100:
+            model.setData(flagIndex, 2)
+        else :
+            model.setData(flagIndex, 1)
+        
     def droppedCmd(self, str):
         self.loadThread = LoadWorker()
         imagePath = [u"{0}".format(ipath) for ipath in str]

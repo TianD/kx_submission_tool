@@ -44,7 +44,7 @@ def parseCmd(path, mod = 1):
                 for v in value:
                     pnm.setFileName(v)
                     if pnm.matchProjName():
-                        result.append(['b', os.path.join(root, v), '', option, 0])
+                        result.append([0, os.path.join(root, v), '', option, 0])
             else :
                 framePrefix = key.split('.')[-2].split('%')[0]
                 frameStart = value[0]
@@ -55,7 +55,7 @@ def parseCmd(path, mod = 1):
                     frameRange = "{0}{1}-{3}-{0}{2}".format(framePrefix, frameStart, frameEnd, miss)
                 else :
                     frameRange = "{0}{1}-{0}{2}".format(framePrefix, frameStart, frameEnd)
-                result.append(['a', os.path.join(root, key), frameRange, option, 0])
+                result.append([0, os.path.join(root, key), frameRange, option, 0])
             
     return result
 

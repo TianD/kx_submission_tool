@@ -15,6 +15,7 @@ import time, os, os.path
 from PyQt4 import QtGui, QtCore
 
 import kx_submission_tool_fun as fun
+from _functools import partial
 
 
 class LoadWorker(QtCore.QThread):
@@ -47,7 +48,8 @@ class LoadWorker(QtCore.QThread):
 
 class SubmitWorker(QtCore.QThread):
     progressSignal = QtCore.pyqtSignal(int)
-    
+    finishSignal = QtCore.pyqtSignal(int)
+        
     def __init__(self, parent = None):
         super(SubmitWorker, self).__init__()
         self.working = True
@@ -63,16 +65,18 @@ class SubmitWorker(QtCore.QThread):
         super(SubmitWorker, self).start()
         self.counts = 1
         self.count = 0
-        #self.percent = self.count*100/self.counts
+        self.percent = 0
         self.data = data
         if self.data[2]:
             self.framesLst = fun.getFrames(self.data[2])
             self.counts = len(self.framesLst)
-        self.uploadPath = fun.createPath(self.data[1], self.data[3].toString())
-        print "create %s" % self.uploadPath
+        self.uploadPath = fun.createPath(self.data[1], self.data[3].toString()) 
         print "%s start" %self.thread()
         self.working = True
-        
+                
+    def sendFinishFlag(self, int):
+        self.finishSignal.emit(int)
+         
     def run(self):
         self.mutex.lock()
         if self.data[2]:
@@ -91,13 +95,15 @@ class SubmitWorker(QtCore.QThread):
                 except:
                     #self.working = False
                     continue
-            #self.percent = self.count*100/self.counts
-            self.progressSignal.emit(self.count*100/self.counts)
+            self.percent = self.count*100/self.counts
+            self.progressSignal.emit(self.percent)
             time.sleep(1)
             self.count += 1
             if self.count >= self.counts:
                 self.working = False
-                #self.percent = 100
-                self.progressSignal.emit(100)
+                self.percent = 100
+                self.progressSignal.emit(self.percent)
+
+        self.finished.connect(partial(self.sendFinishFlag, self.percent))
         self.mutex.unlock()
         
